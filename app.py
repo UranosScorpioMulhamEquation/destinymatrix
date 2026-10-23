@@ -35,6 +35,13 @@ st.markdown(
         padding-bottom: 5px;
         margin-top: 15px;
     }
+    .table-container {
+        max-height: 350px;
+        overflow-y: auto;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 10px;
+    }
     </style>
 """,
     unsafe_allow_html=True,
@@ -82,6 +89,163 @@ def calculate_destiny_matrix(birth_date):
   }
 
 
+# قاموس شرح معاني الطاقة المهيمنة (الـ 22 طاقة الكبرى)
+ENERGY_MEANINGS = {
+    1: "الساحر: طاقة البدايات، الإرادة الصلبة، القدرة على الابتكار وتسيير الأمور بمهارة وقيادة ذاتية.",
+    2: "الكاهنة: طاقة الحدس العميق، الأسرار، الحكمة الصامتة، والتأمل الباطني وقراءة ما بين السطور.",
+    3: "الإمبراطورة: طاقة الخصوبة، الوفرة المادية، النمو، الرعاية، والاهتمام بالتفاصيل الأسرية والمهنية.",
+    4: "الإمبراطور: طاقة السلطة، النظام، الاستقرار الهيكلي، البناء المؤسسي، والمسؤولية القيادية.",
+    5: "الكاهن الأكبر: طاقة العلم، التقاليد، الإرشاد الروحي، التعليم، والالتزام بالمنظومة الأخلاقية.",
+    6: "العاشقان: طاقة الاختيارات العاطفية، الشراكات، الانسجام، التناغم، وبحث القلب عن الجمال.",
+    7: "العربة: طاقة الحركة، السفر، الإصرار، الانتصار على التحديات، والانتقال لمحطة حياتية أوسع.",
+    8: "العدالة: طاقة التوازن، الكارما، الحقيقة المطلقة، والوضوح القانوني والإداري.",
+    9: "الناسك: طاقة الحكمة العميقة، العزلة الاختيارية للنضج، البحث المعرفي، والاستنارة الداخلية.",
+    10: "عجلة الحظ: طاقة التحولات القدرية، الفرص المفاجئة، وانفتاح أبواب الرزق وتغير الدورات للأفضل.",
+    11: "القوة: طاقة الحيوية الجسدية العالية، الشجاعة، السيطرة على النفس، والقدرة الفائقة على التحمل.",
+    12: "المصلوب: طاقة التضحية الواعية، رؤية الأمور من منظور معكوس، وتجاوز الابتلاءات بالصبر الروحي.",
+    13: "الموت: طاقة التحول الجذري، التجدد الشامل، وإغلاق صفحات القديم لفتح آفاق متجددة.",
+    14: "الاعتدال: طاقة التناغم، الصبر، الشفاء الذاتي، والامتزاج الهادئ والمتوازن للعناصر.",
+    15: "الشيطان: طاقة مواجهة الإغراءات، كشف التعلقات المادية الخفية، والتحرر من القيود النفسية.",
+    16: "البرج: طاقة الصدمات المفاجئة، هدم الهياكل غير الصالحة، وإعادة التأسيس على قواعد صحيحة.",
+    17: "النجمة: طاقة الأمل، الإلهام المضيء، الشهرة، والتألق المستقبلي الواعد في الأفق.",
+    18: "القمر: طاقة الخيال، الأوهام، الغموض، وتفعيل مواجهة المخاوف الكامنة في العقل الباطن.",
+    19: "الشمس: طاقة السعادة المطلقة، الوضوح الإشعاعي، النجاح الجماهيري، والحيوية الكبرى.",
+    20: "الحكم: طاقة البعث العائلي أو الشخصي، التحرر من قيود الماضي، واليقظة الكبرى.",
+    21: "العالم: طاقة التوسع العالمي، الانفتاح على الثقافات والآفاق الكبرى، والكمال وتحقيق الغايات.",
+    22: "الأحمق: طاقة الحرية المطلقة، البدايات العفوية النصف واعية، والمغامرة الجريئة بلا قيود.",
+}
+
+
+def get_energy_meaning(energy_num):
+  return ENERGY_MEANINGS.get(
+      energy_num, "طاقة توافقية متجددة تدعم مسار التطور الشخصي."
+  )
+
+
+# دالة تحليل الديون الكارمية من الحياة السابقة
+def analyze_karmic_debts(matrix):
+  karmic_points = [
+      matrix["center"],
+      matrix["p1"],
+      matrix["p2"],
+      matrix["p3"],
+      matrix["p4"],
+  ]
+  debts = []
+  if 15 in karmic_points:
+    debts.append(
+        "كارما السيطرة والتعلق المادي (الرقم 15): اختبارات متكررة في التحرر"
+        " من الإغراءات المادية وتجنب التحكم في الآخرين."
+    )
+  if 13 in karmic_points:
+    debts.append(
+        "كارما التغيير الجذري ومخاوف النهايات (الرقم 13): مقاومة التغييرات"
+        " الإجبارية والتعلق بما أتم دورته."
+    )
+  if 18 in karmic_points:
+    debts.append(
+        "كارما الأوهام والمخاوف المخفية (الرقم 18): الميل لتبني مخاوف غير حقيقية"
+        " والوقوع في فخ التشاؤم."
+    )
+  if 12 in karmic_points:
+    debts.append(
+        "كارما التضحية الزائدة وتعطيل الذات (الرقم 12): تقديم تنازلات مبالغ فيها"
+        " على حساب طاقته الخاصة وعدم وضع حدود."
+    )
+  if 9 in karmic_points:
+    debts.append(
+        "كارما العزلة والانطواء الفكري (الرقم 9): الحاجة لتجاوز الخوف من الانفتاح"
+        " على المجتمع ومشاركة المعرفة."
+    )
+  if not debts:
+    debts.append(
+        "كارما متوازنة نسبياً؛ ترتكز على دروس حياتية خفيفة تتعلق بتحقيق التوازن"
+        " العادل بين الروح والمادة."
+    )
+  return debts
+
+
+# دالة تحليل بوابات التشافي الكارمي ومؤشرات التحرر
+def analyze_karmic_healing_gates(matrix):
+  karmic_points = [
+      matrix["center"],
+      matrix["p1"],
+      matrix["p2"],
+      matrix["p3"],
+      matrix["p4"],
+  ]
+  healing_gates = []
+
+  for p in karmic_points:
+    if p == 15:
+      healing_gates.append(
+          "بوابة التشافي للرقم 15 (طاقة التحرر المادي والتحكم): ممارسة التخلي"
+          " الواعي، التبرع، وتطوير مرونة قبول الآخر دون فرض السيطرة أو الرقابة"
+          " الصارمة."
+      )
+    elif p == 13:
+      healing_gates.append(
+          "بوابة التشافي للرقم 13 (طاقة التحول والتجدد): تقبل النهايات كبدايات"
+          " جديدة، التخلص الدوري من الأشياء والعلاقات والأفكار القديمة التي أتمت"
+          " دورتها."
+      )
+    elif p == 18:
+      healing_gates.append(
+          "بوابة التشافي للرقم 18 (طاقة الإضاءة الباطنية وتبديد الأوهام): مواجهة"
+          " مخاوف العقل الباطن وجهاً لوجه، تدوين الهواجس، وتفعيل اليقين والوضوح"
+          " الفكري."
+      )
+    elif p == 12:
+      healing_gates.append(
+          "بوابة التشافي للرقم 12 (طاقة الخدمة الواعية ووضع الحدود): تعلم قول"
+          " 'لا' بحزم، وحماية الطاقة الشخصية من الاستنزاف عبر العطاء غير"
+          " المشروط الخاطئ."
+      )
+    elif p == 9:
+      healing_gates.append(
+          "بوابة التشافي للرقم 9 (طاقة الانفتاح والحكمة الإنسانية): كسر قوقعة"
+          " الانطواء، ومشاركة المعرفة والخبرات الروحية مع المحيط دون خوف من"
+          " سوء الفهم."
+      )
+
+  if not healing_gates:
+    healing_gates.append(
+        "بوابة التشافي العامة: ممارسة التأمل العميق، توازن طاقة القلب، والاتصال"
+        " المنتظم بالطبيعة لترسيخ طاقة المركز."
+    )
+  return healing_gates
+
+
+# دالة تحليل المعوقات والأنماط المتكررة
+def analyze_patterns_and_obstacles(matrix):
+  obstacles = []
+  patterns = []
+
+  if matrix["center"] in [12, 15, 18]:
+    obstacles.append(
+        "مواجهة صراعات داخلية تتعلق بوضع الحدود الشخصية وقول 'لا'."
+    )
+    patterns.append(
+        "نمط جذب مواقف وعلاقات استنزافية تتطلب وعياً عالياً للتحرر منها."
+    )
+  elif matrix["center"] in [4, 7, 11]:
+    obstacles.append(
+        "الإفراط في تحمل المسؤوليات ومحاولة السيطرة على كل التفاصيل بمفرده."
+    )
+    patterns.append(
+        "نمط الضغط المستمر على الطاقة الجسدية والنفسية مما يسبب إرهاقاً دورياً."
+    )
+  else:
+    obstacles.append(
+        "التشتت بين عدة مسارات والتردد الحاسم في أوقات المفترقات المصيرية."
+    )
+    patterns.append(
+        "نمط تأجيل الخطوات التنفيذية الكبرى حتى تتضح الرؤية بشكل كامل."
+    )
+
+  return obstacles, patterns
+
+
 # دالة لتنسيق السنة بنطاق سنتين (مثال: 2034-2035)
 def rg(y):
   return f"{y}-{y+1}"
@@ -98,7 +262,7 @@ birth_date = st.sidebar.date_input(
 )
 
 st.markdown(
-    '<h1 class="main-title">🌟 نظام تحليل مصفوفة القدر والخرائط الفلكية</h1>',
+    '<h1 class="main-title">🌟 نظام تحليل مصفوفة القدر - تطوير الفلكي استرو رادار</h1>',
     unsafe_allow_html=True,
 )
 st.markdown(
@@ -200,22 +364,7 @@ if st.sidebar.button("🚀 ابدأ التحليل الفلكي الشامل", t
       if (b_year + a + 1) <= b_year + 70
   ]
 
-  # رابعاً: سنوات توقع الفقد العائلي (بحال كان الأب - الأم - الأبناء على قيد الحياة)
-  # تعتمد على تفاعل طاقة المركز وطاقات خطوط الأصول والعائلة مع الدورات الكارمية (دورات 27، 41، 54، 64 سنة)
-  dyn_offset_father = 27 + (matrix["center"] % 5)
-  dyn_offset_child = 41 + (matrix["love_line"] % 4)
-  dyn_offset_mother = 52 + (matrix["p2"] % 5)
-
-  loss_father = rg(b_year + dyn_offset_father)
-  loss_children = rg(b_year + dyn_offset_child)
-  loss_mother = rg(b_year + dyn_offset_mother)
-  loss_spouse = (
-      rg(b_year + 64)
-      if (b_year + 64 + 1) <= b_year + 70
-      else "خارج النطاق العمري"
-  )
-
-  # خامساً: الهجرة والسفر
+  # رابعاً: الهجرة والسفر
   travel_ages = [24, 32, 41, 49]
   travel_years = [
       rg(b_year + a) for a in travel_ages if (b_year + a + 1) <= b_year + 70
@@ -226,7 +375,7 @@ if st.sidebar.button("🚀 ابدأ التحليل الفلكي الشامل", t
       else "السفر مقتصر على التنقلات والسياحة ورحلات العمل المؤقتة"
   )
 
-  # سادساً: تحليل الشخصية (22 نقطة) والشهرة
+  # خامساً: تحليل الشخصية والشهرة
   is_famous = matrix["center"] in [11, 19, 21] or matrix["p1"] in [11, 19, 17]
   fame_ages = [35, 46]
   fame_years = [
@@ -237,6 +386,24 @@ if st.sidebar.button("🚀 ابدأ التحليل الفلكي الشامل", t
       if is_famous
       else "التميز التخصصي في بيئة العمل والبحث دون صخب إعلامي ضخم"
   )
+
+  # سادساً: الديون الكارمية والأنماط والمعوقات وبوابات التشافي
+  karmic_debts = analyze_karmic_debts(matrix)
+  obstacles, recurring_patterns = analyze_patterns_and_obstacles(matrix)
+  healing_gates = analyze_karmic_healing_gates(matrix)
+
+  # سابعاً: التأثيرات السنوية لـ 60 عاماً قادمة تبدأ من سنة الميلاد (b_year)
+  annual_effects = []
+  for i in range(60):
+    yr = b_year + i
+    age = i
+    yearly_energy = reduce_to_22(
+        matrix["center"] + reduce_to_22(yr) + (age % 22)
+    )
+    meaning = get_energy_meaning(yearly_energy)
+    annual_effects.append(
+        {"year": yr, "age": age, "energy": yearly_energy, "meaning": meaning}
+    )
 
   # عرض النتائج في واجهة Streamlit
   st.success(
@@ -294,27 +461,11 @@ if st.sidebar.button("🚀 ابدأ التحليل الفلكي الشامل", t
       unsafe_allow_html=True,
   )
 
-  # 4. الفقد العائلي
+  # 4. الهجرة والسفر
   st.markdown(
       f"""
     <div class="card">
-        <h3 class="sub-header">رابعاً: سنوات توقع الفقد العائلي (وفق الدورات الكارمية والمصفوفة)</h3>
-        <ul>
-            <li><b>سنة توقع فقد الأب إن كان على قيد الحياة:</b> {loss_father}</li>
-            <li><b>سنة توقع فقد الأم إن كانت على قيد الحياة:</b> {loss_mother}</li>
-            <li><b>سنة توقع فقد أحد الأبناء إن كان على قيد الحياة:</b> {loss_children}</li>
-            <li><b>سنة توقع فقد الزوج/ة إن كان/ت على قيد الحياة:</b> {loss_spouse}</li>
-        </ul>
-    </div>
-    """,
-      unsafe_allow_html=True,
-  )
-
-  # 5. الهجرة والسفر
-  st.markdown(
-      f"""
-    <div class="card">
-        <h3 class="sub-header">خامساً: الهجرة والسفر</h3>
+        <h3 class="sub-header">رابعاً: الهجرة والسفر</h3>
         <p><b>حالة الهجرة:</b> {migration_status}</p>
         <p><b>سنوات السفر الخارجي والترحال:</b> {', '.join(travel_years)}.</p>
     </div>
@@ -322,11 +473,11 @@ if st.sidebar.button("🚀 ابدأ التحليل الفلكي الشامل", t
       unsafe_allow_html=True,
   )
 
-  # 6. تحليل الشخصية والشهرة
+  # 5. تحليل الشخصية والشهرة
   st.markdown(
       f"""
     <div class="card">
-        <h3 class="sub-header">سادساً: تحليل الشخصية (فك شيفرات 22 نقطة) والشهرة</h3>
+        <h3 class="sub-header">خامساً: تحليل الشخصية (فك شيفرات 22 نقطة) والشهرة</h3>
         <p><b>ملخص تحليل الشخصية:</b> يمتلك صاحب المصفوفة طاقة المركز ({matrix['center']}) المدمجة مع الأسرار الكبرى الـ 22، مما يمنحه بصيرة نافذة، قدرة تحليلية عميقة، ومقدرة فريدة على كشف خبايا الأمور وفك الشيفرات المعقدة.</p>
         <p><b>مؤشر الشهرة:</b> {'مشهور وله بصمة جماهيرية واسعة' if is_famous else 'شخصية تتميز بالعمق والنجاح التخصصي والنخبوي'}.</p>
         <p><b>سنوات الشهرة:</b> {', '.join(fame_years) if fame_years else 'النجاح مهني وعميق دون صخب إعلامي واسع'}.</p>
@@ -336,7 +487,69 @@ if st.sidebar.button("🚀 ابدأ التحليل الفلكي الشامل", t
       unsafe_allow_html=True,
   )
 
+  # 6. الكارما والمعوقات والأنماط المتكررة
+  st.markdown(
+      f"""
+    <div class="card">
+        <h3 class="sub-header">سادساً: الديون الكارمية من الحياة السابقة والمعوقات</h3>
+        <p><b>الديون الكارمية المؤثرة:</b></p>
+        <ul>{''.join([f"<li>{debt}</li>" for debt in karmic_debts])}</ul>
+        <p><b>المعوقات الأساسية:</b></p>
+        <ul>{''.join([f"<li>{obs}</li>" for obs in obstacles])}</ul>
+        <p><b>الأنماط المتكررة في حياة المستفيد:</b></p>
+        <ul>{''.join([f"<li>{pat}</li>" for pat in recurring_patterns])}</ul>
+    </div>
+    """,
+      unsafe_allow_html=True,
+  )
+
+  # 7. بوابات التشافي الكارمي ومؤشرات التحرر
+  st.markdown(
+      f"""
+    <div class="card">
+        <h3 class="sub-header">سابعاً: بوابات التشافي الكارمي ومؤشرات التحرر</h3>
+        <p><b>مفاتيح الحل والترددات العلاجية لتجاوز العقد الكارمية:</b></p>
+        <ul>{''.join([f"<li>{gate}</li>" for gate in healing_gates])}</ul>
+    </div>
+    """,
+      unsafe_allow_html=True,
+  )
+
+  # 8. التأثيرات السنوية لـ 60 عاماً القادمة (من سنة الميلاد)
+  annual_rows = "".join([
+      f"<tr><td>{item['year']}</td><td>{item['age']}</td><td><b>طاقة الرقم {item['energy']}</b></td><td>{item['meaning']}</td></tr>"
+      for item in annual_effects
+  ])
+  st.markdown(
+      f"""
+    <div class="card">
+        <h3 class="sub-header">ثامناً: التأثيرات السنوية وتفصيل الطاقات المهيمنة (من سنة الميلاد {b_year} ولغاية 60 عاماً)</h3>
+        <div class="table-container">
+            <table style="width:100%; border-collapse: collapse; text-align: right;">
+                <thead>
+                    <tr style="background-color: #f2f2f2; border-bottom: 2px solid #ddd;">
+                        <th style="padding: 8px;">السنة</th>
+                        <th style="padding: 8px;">العمر</th>
+                        <th style="padding: 8px;">الطاقة</th>
+                        <th style="padding: 8px;">شرح المعنى والتأثير المفصل</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {annual_rows}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    """,
+      unsafe_allow_html=True,
+  )
+
   # تقرير HTML القابل للطباعة
+  html_annual_rows = "".join([
+      f"<tr><td style='padding: 6px; border-bottom: 1px solid #ddd;'>{item['year']}</td><td style='padding: 6px; border-bottom: 1px solid #ddd;'>{item['age']}</td><td style='padding: 6px; border-bottom: 1px solid #ddd;'><b>طاقة الرقم {item['energy']}</b></td><td style='padding: 6px; border-bottom: 1px solid #ddd;'>{item['meaning']}</td></tr>"
+      for item in annual_effects
+  ])
+
   html_report = f"""
     <!DOCTYPE html>
     <html lang="ar" dir="rtl">
@@ -345,7 +558,7 @@ if st.sidebar.button("🚀 ابدأ التحليل الفلكي الشامل", t
         <title>تقرير مصفوفة القدر الشامل - {name}</title>
         <style>
             body {{ font-family: 'Amiri', Tahoma, sans-serif; background-color: #fff; color: #222; padding: 40px; line-height: 1.8; }}
-            .container {{ max-width: 900px; margin: auto; border: 1px solid #ccc; padding: 40px; border-radius: 10px; }}
+            .container {{ max-width: 950px; margin: auto; border: 1px solid #ccc; padding: 40px; border-radius: 10px; }}
             h1 {{ text-align: center; color: #1a5276; border-bottom: 3px solid #3498db; padding-bottom: 15px; }}
             .meta {{ background: #f8f9fa; padding: 20px; border-radius: 6px; margin-bottom: 25px; border-right: 4px solid #2980b9; }}
             .section {{ margin-bottom: 25px; border-bottom: 1px solid #e2e8f0; padding-bottom: 20px; }}
@@ -354,6 +567,9 @@ if st.sidebar.button("🚀 ابدأ التحليل الفلكي الشامل", t
             li {{ margin-bottom: 8px; }}
             .footer {{ text-align: center; margin-top: 40px; font-size: 12px; color: #7f8c8d; border-top: 1px solid #eee; padding-top: 15px; }}
             .print-btn {{ background: #2c3e50; color: white; padding: 12px 30px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; display: block; margin: 30px auto; }}
+            table {{ width: 100%; border-collapse: collapse; margin-top: 10px; }}
+            th, td {{ border: 1px solid #ddd; padding: 8px; text-align: right; font-size: 13px; }}
+            th {{ background-color: #f8f9fa; color: #2c3e50; }}
             @media print {{ .print-btn {{ display: none; }} }}
         </style>
     </head>
@@ -396,27 +612,50 @@ if st.sidebar.button("🚀 ابدأ التحليل الفلكي الشامل", t
             </div>
 
             <div class="section">
-                <h3>رابعاً: سنوات توقع الفقد العائلي - إن كان الأم / الأب / أحد الأبناء على قيد الحياة</h3>
-                <ul>
-                    <li><b>سنة توقع فقد الأب إن كان على قيد الحياة:</b> {loss_father}</li>
-                    <li><b>سنة توقع فقد الأم إن كانت على قيد الحياة:</b> {loss_mother}</li>
-                    <li><b>سنة توقع فقد أحد الأبناء إن كان على قيد الحياة:</b> {loss_children}</li>
-                    <li><b>سنة توقع فقد الزوج/ة أن كان/ت على قيد الحياة:</b> {loss_spouse}</li>
-                </ul>
-            </div>
-
-            <div class="section">
-                <h3>خامساً: الهجرة والسفر</h3>
+                <h3>رابعاً: الهجرة والسفر</h3>
                 <p><b>حالة الهجرة:</b> {migration_status}</p>
                 <p><b>سنوات السفر الخارجي والترحال:</b> {', '.join(travel_years)}</p>
             </div>
 
             <div class="section">
-                <h3>سادساً: تحليل الشخصية (فك شيفرات 22 نقطة) والشهرة</h3>
+                <h3>خامساً: تحليل الشخصية (فك شيفرات 22 نقطة) والشهرة</h3>
                 <p><b>تحليل الشخصية:</b> يحمل طاقة المركز ({matrix['center']}) المفسرة لشيفرات الأسرار الكبرى، مما يمنحه حكمة استثنائية وبصيرة نافذة.</p>
                 <p><b>مؤشر الشهرة:</b> {'مشهور وله بصمة جماهيرية واسعة' if is_famous else 'شخصية نخبوية ذات نجاح تخصصي هادئ'}</p>
                 <p><b>سنوات الشهرة:</b> {', '.join(fame_years) if fame_years else 'لا توجد ذروة شهرة إعلامية ضخمة'}</p>
                 <p><b>مجال الشهرة:</b> {fame_field}</p>
+            </div>
+
+            <div class="section">
+                <h3>سادساً: الديون الكارمية من الحياة السابقة والمعوقات والأنماط</h3>
+                <p><b>الديون الكارمية:</b></p>
+                <ul>{''.join([f"<li>{debt}</li>" for debt in karmic_debts])}</ul>
+                <p><b>المعوقات الأساسية:</b></p>
+                <ul>{''.join([f"<li>{obs}</li>" for obs in obstacles])}</ul>
+                <p><b>الأنماط المتكررة:</b></p>
+                <ul>{''.join([f"<li>{pat}</li>" for pat in recurring_patterns])}</ul>
+            </div>
+
+            <div class="section">
+                <h3>سابعاً: بوابات التشافي الكارمي ومؤشرات التحرر</h3>
+                <p><b>مفاتيح الحل والترددات العلاجية:</b></p>
+                <ul>{''.join([f"<li>{gate}</li>" for gate in healing_gates])}</ul>
+            </div>
+
+            <div class="section">
+                <h3>ثامناً: التأثيرات السنوية وتفصيل الطاقات المهيمنة (من سنة الميلاد {b_year} ولغاية 60 عاماً)</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>السنة</th>
+                            <th>العمر</th>
+                            <th>الطاقة</th>
+                            <th>شرح المعنى والتأثير المفصل</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {html_annual_rows}
+                    </tbody>
+                </table>
             </div>
 
             <button class="print-btn" onclick="window.print()">طباعة التقرير مباشرة</button>
